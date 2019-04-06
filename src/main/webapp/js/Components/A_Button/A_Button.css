@@ -1,0 +1,53 @@
+*:focus {
+    outline: none;
+}
+
+.button {
+    border: none;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 16px;
+    width: 70px;
+    height: 60px;
+}
+
+.digit-button {
+    background: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.digit-button:hover {
+    background: #e0e0e0;
+    /*border: 1px gray solid;*/
+}
+
+.digit-button:active {
+    background: #d2d2d2;
+}
+
+.operation-button {
+    background: #ffffff70;
+}
+
+.operation-button:hover {
+    color: white;
+    background: royalblue;
+}
+
+.operation-button:active {
+    color: white;
+    background: lightseagreen;
+}
+
+.control-button {
+    background: #ffffff70;
+}
+
+.control-button:hover {
+    background: #e0e0e0;
+    /*border: 1px gray solid;*/
+}
+
+.control-button:active {
+    background: #d2d2d2;
+}

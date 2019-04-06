@@ -1,0 +1,19 @@
+.panel {
+    text-align: right;
+    padding: 5px;
+}
+
+#expr {
+    color: gray;
+    font-size: 14px;
+}
+
+#expr:empty::after {
+    content: ".";
+    visibility: hidden;
+}
+
+#input {
+    font-size: 40px;
+    font-weight: 500;
+}
