@@ -21,8 +21,6 @@ public class CalculatorService {
             default:
                 throw new RuntimeException("Invalid operation : " + operation);
         }
-        if(!Double.isFinite(res))
-            return "Infinity";
         String str = String.valueOf(res);
         if(str.substring(str.length()-2, str.length()).equals(".0"))
             str = str.substring(0, str.length()-2);
