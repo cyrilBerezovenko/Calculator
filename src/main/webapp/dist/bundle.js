@@ -110,7 +110,7 @@ exports.push([module.i, "*:focus {\r\n    outline: none;\r\n}\r\n\r\n.button {\r
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".panel {\r\n    font-family: \"Monospaced\", sans-serif;\r\n    text-align: right;\r\n    padding: 5px;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n}", ""]);
+exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n}", ""]);
 
 
 
@@ -24450,6 +24450,14 @@ function (_React$Component) {
   }, {
     key: "backspace",
     value: function backspace() {
+      if (!this.state.cont_input || !isFinite(parseFloat(this.state.input))) {
+        this.setState({
+          input: '0',
+          cont_input: true
+        });
+        return;
+      }
+
       var inp = this.state.input;
       if (inp.length === 1) inp = '0';else inp = inp.substr(0, inp.length - 1);
       this.setState({
@@ -24478,6 +24486,14 @@ function (_React$Component) {
   }, {
     key: "dot",
     value: function dot() {
+      if (!this.state.cont_input) {
+        this.setState({
+          input: '0.',
+          cont_input: true
+        });
+        return;
+      }
+
       var inp = this.state.input;
       if (inp[inp.length - 1] === '.') return;
       inp += '.';

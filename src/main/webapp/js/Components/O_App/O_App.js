@@ -26,6 +26,13 @@ export default class O_App extends React.Component {
     }
 
     backspace() {
+        if(!this.state.cont_input || !isFinite(parseFloat(this.state.input))) {
+            this.setState({
+                input: '0',
+                cont_input: true
+            });
+            return;
+        }
         let inp = this.state.input;
         if(inp.length === 1) inp = '0';
         else inp = inp.substr(0, inp.length-1);
@@ -52,6 +59,13 @@ export default class O_App extends React.Component {
     }
 
     dot() {
+        if(!this.state.cont_input) {
+            this.setState({
+                input: '0.',
+                cont_input: true
+            });
+            return;
+        }
         let inp = this.state.input;
         if(inp[inp.length-1] === '.') return;
         inp += '.';
