@@ -24433,7 +24433,8 @@ function (_React$Component) {
       input: '0',
       cont_input: false,
       first: 0,
-      second: 0
+      second: 0,
+      op: undefined
     };
     return _this;
   }
@@ -24472,15 +24473,15 @@ function (_React$Component) {
         input: '0',
         cont_input: false,
         first: 0,
-        second: 0
+        second: 0,
+        op: undefined
       });
     }
   }, {
     key: "ce",
     value: function ce() {
       this.setState({
-        input: '0',
-        second: '0'
+        input: '0'
       });
     }
   }, {
@@ -24515,21 +24516,31 @@ function (_React$Component) {
   }, {
     key: "onOperatorClick",
     value: function onOperatorClick(operation) {
-      debugger;
-
-      if (this.state.expr === '') {
+      if (!this.state.op) {
         this.setState({
           expr: this.state.input + ' ' + operation,
           cont_input: false,
-          first: this.state.input
+          first: this.state.input,
+          op: operation
         });
       } else {
+        if (!this.state.cont_input) {
+          var expr = this.state.expr;
+          if (expr.length === 0) expr = this.state.input + ' ' + operation;else expr = expr.slice(0, expr.length - 1) + operation;
+          this.setState({
+            expr: expr,
+            op: operation
+          });
+          return;
+        }
+
         var app = this;
-        var prevOperation = this.state.expr[this.state.expr.length - 1];
+        var prevOperation = this.state.op;
         this.setState({
           second: this.state.input,
           cont_input: false,
-          expr: this.state.expr + ' ' + this.state.input + ' ' + operation
+          expr: this.state.expr + ' ' + this.state.input + ' ' + operation,
+          op: operation
         }, function () {
           return app.eval(prevOperation);
         });
@@ -24538,7 +24549,6 @@ function (_React$Component) {
   }, {
     key: "eval",
     value: function _eval(operation) {
-      debugger;
       var operations = {
         '+': 'sum',
         '-': 'sub',
@@ -24551,9 +24561,7 @@ function (_React$Component) {
       var app = this;
 
       req.onreadystatechange = function () {
-        debugger;
         if (req.readyState !== 4) return;
-        debugger;
         var res = String(parseFloat(req.responseText));
         app.setState({
           input: res,
@@ -24567,15 +24575,15 @@ function (_React$Component) {
   }, {
     key: "equals",
     value: function equals() {
-      if (this.state.expr.length === 0) return;
-      var op = this.state.expr[this.state.expr.length - 1];
+      if (!this.state.op) return;
       var app = this;
       this.setState({
-        second: this.state.input,
+        first: this.state.cont_input && this.state.expr === '' ? this.state.input : this.state.first,
+        second: this.state.expr === '' ? this.state.second : this.state.input,
         expr: '',
         cont_input: false
       }, function () {
-        return app.eval(op);
+        return app.eval(app.state.op);
       });
     }
   }, {

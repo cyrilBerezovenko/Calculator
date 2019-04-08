@@ -12,7 +12,8 @@ export default class O_App extends React.Component {
             input: '0',
             cont_input: false,
             first: 0,
-            second: 0
+            second: 0,
+            op: undefined
         };
     }
 
@@ -47,14 +48,14 @@ export default class O_App extends React.Component {
             input: '0',
             cont_input: false,
             first: 0,
-            second: 0
+            second: 0,
+            op: undefined
         });
     }
 
     ce() {
         this.setState({
-            input: '0',
-            second: '0'
+            input: '0'
         });
     }
 
@@ -85,26 +86,36 @@ export default class O_App extends React.Component {
     }
 
     onOperatorClick(operation) {
-        debugger;
-        if(this.state.expr === '') {
+        if(!this.state.op) {
             this.setState({
                 expr: this.state.input + ' ' + operation,
                 cont_input: false,
-                first: this.state.input
+                first: this.state.input,
+                op: operation
             });
         } else {
+            if(!this.state.cont_input) {
+                let expr = this.state.expr;
+                if(expr.length === 0) expr = this.state.input + ' ' + operation;
+                else expr = expr.slice(0, expr.length-1) + operation;
+                this.setState({
+                    expr: expr,
+                    op: operation
+                });
+                return;
+            }
             let app = this;
-            let prevOperation = this.state.expr[this.state.expr.length-1];
+            let prevOperation = this.state.op;
             this.setState({
                 second: this.state.input,
                 cont_input: false,
-                expr: this.state.expr + ' ' + this.state.input + ' ' + operation
+                expr: this.state.expr + ' ' + this.state.input + ' ' + operation,
+                op: operation
             }, () => app.eval(prevOperation));
         }
     }
 
     eval(operation) {
-        debugger;
         let operations = {
             '+' : 'sum',
             '-' : 'sub',
@@ -116,9 +127,7 @@ export default class O_App extends React.Component {
         req.open('GET', url);
         let app = this;
         req.onreadystatechange = () => {
-            debugger;
             if(req.readyState !== 4) return;
-            debugger;
 
             let res = String(parseFloat(req.responseText));
             app.setState({
@@ -131,14 +140,14 @@ export default class O_App extends React.Component {
     }
 
     equals() {
-        if(this.state.expr.length === 0) return;
-        let op = this.state.expr[this.state.expr.length-1];
+        if(!this.state.op) return;
         let app = this;
         this.setState({
-            second: this.state.input,
+            first: (this.state.cont_input && this.state.expr === '') ? this.state.input : this.state.first,
+            second: this.state.expr === '' ? this.state.second : this.state.input,
             expr: '',
             cont_input: false
-        }, () => app.eval(op));
+        }, () => app.eval(app.state.op));
     }
 
     render() {
