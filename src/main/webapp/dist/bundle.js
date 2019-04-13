@@ -110,7 +110,7 @@ exports.push([module.i, "*:focus {\r\n    outline: none;\r\n}\r\n\r\n.button {\r
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n}", ""]);
+exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;\r\n    width: 100%;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n    width: 100%;\r\n    height: 52px;\r\n}", ""]);
 
 
 
@@ -125,7 +125,7 @@ exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    font-family: \"Segoe UI\", sans-serif;\r\n}\r\n\r\n.app {\r\n    margin: 60px auto;\r\n    width: fit-content;\r\n    height: fit-content;\r\n    background-color: #f1f1f1;\r\n}", ""]);
+exports.push([module.i, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n    font-family: \"Segoe UI\", sans-serif;\r\n}\r\n\r\n.app {\r\n    margin: 60px auto;\r\n    width: 290px;\r\n    height: fit-content;\r\n    background-color: #f1f1f1;\r\n}", ""]);
 
 
 
@@ -24337,13 +24337,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function A_Panel(props) {
+  var s = '';
+
+  L: {
+    var inp = props.input;
+    if (inp.indexOf('e') !== -1 || !isFinite(parseFloat(inp))) break L;
+    var dot = inp.indexOf('.');
+    if (dot !== -1) inp = inp.slice(0, dot);
+
+    for (var i = inp.length - 1; i >= 0; i--) {
+      s = inp[i] + s;
+      if ((inp.length - i) % 3 === 0) s = ' ' + s;
+    }
+
+    s = s.trim();
+    if (dot !== -1) s += props.input.slice(dot);
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "panel"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     id: "expr"
   }, props.expr), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     id: "input"
-  }, props.input));
+  }, s || props.input));
 }
 
 /***/ }),
@@ -24434,12 +24451,18 @@ function (_React$Component) {
       cont_input: false,
       first: 0,
       second: 0,
-      op: undefined
+      op: undefined,
+      max_digits: 15
     };
     return _this;
   }
 
   _createClass(O_App, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      window.textFit(document.querySelector('#input'));
+    }
+  }, {
     key: "negate",
     value: function negate() {
       var inp = this.state.input;
@@ -24507,6 +24530,7 @@ function (_React$Component) {
     key: "onDigitClick",
     value: function onDigitClick(digit) {
       var inp = this.state.input;
+      if (this.state.cont_input && inp.length >= this.state.max_digits) return;
       inp = inp === '0' || !this.state.cont_input ? digit : inp + digit;
       this.setState({
         input: inp,
@@ -24562,7 +24586,7 @@ function (_React$Component) {
 
       req.onreadystatechange = function () {
         if (req.readyState !== 4) return;
-        var res = String(parseFloat(req.responseText));
+        var res = req.responseText;
         app.setState({
           input: res,
           cont_input: false,

@@ -27,11 +27,11 @@ public class Controller {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             StringBuilder str = new StringBuilder();
             reader.lines().forEach(s -> str.append(s).append("\n"));
+            reader.close();
             return str.toString();
-        } catch(FileNotFoundException ex) {
-            ex.printStackTrace();
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
         }
-        return null;
     }
 
     @GetMapping("/")
@@ -43,6 +43,12 @@ public class Controller {
     @GetMapping("/bundle.js")
     public ResponseEntity getJS() {
         String body = readFile("./src/main/webapp/dist/bundle.js");
+        return ResponseEntity.ok(body);
+    }
+
+    @GetMapping("/textFit.js")
+    public ResponseEntity getTextFit() {
+        String body = readFile("./src/main/webapp/js/lib/textFit.js");
         return ResponseEntity.ok(body);
     }
 

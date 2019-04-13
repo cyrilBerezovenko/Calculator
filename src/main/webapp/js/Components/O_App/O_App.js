@@ -13,8 +13,13 @@ export default class O_App extends React.Component {
             cont_input: false,
             first: 0,
             second: 0,
-            op: undefined
+            op: undefined,
+            max_digits: 15
         };
+    }
+
+    componentDidUpdate() {
+        window.textFit(document.querySelector('#input'));
     }
 
     negate() {
@@ -78,6 +83,7 @@ export default class O_App extends React.Component {
 
     onDigitClick(digit) {
         let inp = this.state.input;
+        if(this.state.cont_input && inp.length >= this.state.max_digits) return;
         inp = (inp === '0' || !this.state.cont_input) ? digit : inp + digit;
         this.setState({
             input: inp,
@@ -129,7 +135,7 @@ export default class O_App extends React.Component {
         req.onreadystatechange = () => {
             if(req.readyState !== 4) return;
 
-            let res = String(parseFloat(req.responseText));
+            let res = req.responseText;
             app.setState({
                 input: res,
                 cont_input: false,
