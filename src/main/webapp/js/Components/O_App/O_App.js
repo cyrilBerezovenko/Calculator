@@ -60,7 +60,9 @@ export default class O_App extends React.Component {
 
     ce() {
         this.setState({
-            input: '0'
+            input: '0',
+            first: 0,
+            second: 0
         });
     }
 
@@ -73,7 +75,7 @@ export default class O_App extends React.Component {
             return;
         }
         let inp = this.state.input;
-        if(inp[inp.length-1] === '.') return;
+        if(inp.indexOf('.') !== -1) return;
         inp += '.';
         this.setState({
             input: inp,
@@ -163,16 +165,16 @@ export default class O_App extends React.Component {
                 <table>
                     <tbody>
                         <tr>
-                            <td><A_Button text={'CE'} className={'control-button'} onClick={this.ce.bind(this)}/></td>
-                            <td><A_Button text={'C'} className={'control-button'} onClick={this.c.bind(this)}/></td>
-                            <td><A_Button text={'<-'} className={'control-button'} onClick={this.backspace.bind(this)}/></td>
+                            <td><A_Button pkey={'Delete'} text={'CE'} className={'control-button'} onClick={this.ce.bind(this)}/></td>
+                            <td><A_Button pkey={'c'} text={'C'} className={'control-button'} onClick={this.c.bind(this)}/></td>
+                            <td><A_Button pkey={'Backspace'} text={'<-'} className={'control-button'} onClick={this.backspace.bind(this)}/></td>
                             <td><A_Button text={'/'} className={'operation-button'} onClick={() => this.onOperatorClick('/')}/></td>
                         </tr>
                         <tr>
                             <td><A_Button text={'7'} className={'digit-button'} onClick={() => this.onDigitClick('7')}/></td>
                             <td><A_Button text={'8'} className={'digit-button'} onClick={() => this.onDigitClick('8')}/></td>
                             <td><A_Button text={'9'} className={'digit-button'} onClick={() => this.onDigitClick('9')}/></td>
-                            <td><A_Button text={'x'} className={'operation-button'} onClick={() => this.onOperatorClick('x')}/></td>
+                            <td><A_Button pkey={'*'} text={'x'} className={'operation-button'} onClick={() => this.onOperatorClick('x')}/></td>
                         </tr>
                         <tr>
                             <td><A_Button text={'4'} className={'digit-button'} onClick={() => this.onDigitClick('4')}/></td>
@@ -187,10 +189,10 @@ export default class O_App extends React.Component {
                             <td><A_Button text={'+'} className={'operation-button'} onClick={() => this.onOperatorClick('+')}/></td>
                         </tr>
                         <tr>
-                            <td><A_Button text={'+/-'} className={'control-button'} onClick={this.negate.bind(this)}/></td>
+                            <td><A_Button pkey={'n'} text={'+/-'} className={'control-button'} onClick={this.negate.bind(this)}/></td>
                             <td><A_Button text={'0'} className={'digit-button'} onClick={() => this.onDigitClick('0')}/></td>
-                            <td><A_Button text={'.'} className={'control-button'} onClick={this.dot.bind(this)}/></td>
-                            <td><A_Button text={'='} className={'operation-button'} onClick={this.equals.bind(this)}/></td>
+                            <td><A_Button pkey={['.', ',']} text={'.'} className={'control-button'} onClick={this.dot.bind(this)}/></td>
+                            <td><A_Button pkey={['=', 'Enter']} text={'='} className={'operation-button'} onClick={this.equals.bind(this)}/></td>
                         </tr>
                     </tbody>
                 </table>

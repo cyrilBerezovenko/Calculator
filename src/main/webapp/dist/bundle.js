@@ -95,7 +95,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "*:focus {\r\n    outline: none;\r\n}\r\n\r\n.button {\r\n    border: none;\r\n    font-family: \"Segoe UI\", sans-serif;\r\n    font-size: 16px;\r\n    width: 70px;\r\n    height: 60px;\r\n}\r\n\r\n.digit-button {\r\n    background: white;\r\n    font-weight: bold;\r\n    font-size: 18px;\r\n}\r\n\r\n.digit-button:hover {\r\n    background: #e0e0e0;\r\n    /*border: 1px gray solid;*/\r\n}\r\n\r\n.digit-button:active {\r\n    background: #d2d2d2;\r\n}\r\n\r\n.operation-button {\r\n    background: #ffffff70;\r\n}\r\n\r\n.operation-button:hover {\r\n    color: white;\r\n    background: royalblue;\r\n}\r\n\r\n.operation-button:active {\r\n    color: white;\r\n    background: lightseagreen;\r\n}\r\n\r\n.control-button {\r\n    background: #ffffff70;\r\n}\r\n\r\n.control-button:hover {\r\n    background: #e0e0e0;\r\n    /*border: 1px gray solid;*/\r\n}\r\n\r\n.control-button:active {\r\n    background: #d2d2d2;\r\n}", ""]);
+exports.push([module.i, "*:focus {\r\n    outline: none;\r\n}\r\n\r\n.button {\r\n    border: none;\r\n    font-family: \"Segoe UI\", sans-serif;\r\n    font-size: 16px;\r\n    width: 70px;\r\n    height: 60px;\r\n}\r\n\r\n.digit-button {\r\n    background: white;\r\n    font-weight: bold;\r\n    font-size: 18px;\r\n}\r\n\r\n.digit-button:hover {\r\n    background: #e0e0e0;\r\n}\r\n\r\n.digit-button:active {\r\n    background: #d2d2d2;\r\n}\r\n\r\n.operation-button {\r\n    background: #ffffff70;\r\n}\r\n\r\n.operation-button:hover {\r\n    color: white;\r\n    background: royalblue;\r\n}\r\n\r\n.operation-button:active {\r\n    color: white;\r\n    background: lightseagreen;\r\n}\r\n\r\n.control-button {\r\n    background: #ffffff70;\r\n}\r\n\r\n.control-button:hover {\r\n    background: #e0e0e0;\r\n}\r\n\r\n.control-button:active {\r\n    background: #d2d2d2;\r\n}\r\n\r\n.active {\r\n    background: #d2d2d2;\r\n}\r\n\r\n.op-active {\r\n    color: white;\r\n    background: lightseagreen;\r\n}", ""]);
 
 
 
@@ -24279,14 +24279,85 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _A_Button_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./A_Button.css */ "./src/main/webapp/js/Components/A_Button/A_Button.css");
 /* harmony import */ var _A_Button_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_A_Button_css__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
-function A_Button(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: 'button ' + props.className,
-    onClick: props.onClick
-  }, props.text);
-}
+
+
+var A_Button =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(A_Button, _React$Component);
+
+  function A_Button(props) {
+    var _this;
+
+    _classCallCheck(this, A_Button);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(A_Button).call(this, props));
+
+    var btn = _assertThisInitialized(_assertThisInitialized(_this));
+
+    if (props.pkey !== null) {
+      document.addEventListener('keydown', function (event) {
+        if (document.wait || !Array.isArray(props.pkey) && !(event.key === (props.pkey || props.text)) || Array.isArray(props.pkey) && props.pkey.indexOf(event.key) === -1) return;
+        document.wait = true;
+        setTimeout(function () {
+          return document.wait = false;
+        }, 20);
+        props.onClick();
+        if (btn.state.className.indexOf('active') !== -1) return;
+        var cl = btn.state.className === 'operation-button' ? ' op-active' : ' active';
+        btn.setState({
+          className: btn.state.className + cl
+        }, function () {
+          setTimeout(function () {
+            return btn.setState({
+              className: btn.state.className.replace(cl, '')
+            });
+          }, 50);
+        });
+      });
+    }
+
+    _this.state = {
+      text: props.text,
+      onClick: props.onClick,
+      className: props.className
+    };
+    return _this;
+  }
+
+  _createClass(A_Button, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "button ".concat(this.state.className),
+        onClick: this.state.onClick
+      }, this.state.text);
+    }
+  }]);
+
+  return A_Button;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
 
 /***/ }),
 
@@ -24504,7 +24575,9 @@ function (_React$Component) {
     key: "ce",
     value: function ce() {
       this.setState({
-        input: '0'
+        input: '0',
+        first: 0,
+        second: 0
       });
     }
   }, {
@@ -24519,7 +24592,7 @@ function (_React$Component) {
       }
 
       var inp = this.state.input;
-      if (inp[inp.length - 1] === '.') return;
+      if (inp.indexOf('.') !== -1) return;
       inp += '.';
       this.setState({
         input: inp,
@@ -24621,14 +24694,17 @@ function (_React$Component) {
         expr: this.state.expr,
         input: this.state.input
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: 'Delete',
         text: 'CE',
         className: 'control-button',
         onClick: this.ce.bind(this)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: 'c',
         text: 'C',
         className: 'control-button',
         onClick: this.c.bind(this)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: 'Backspace',
         text: '<-',
         className: 'control-button',
         onClick: this.backspace.bind(this)
@@ -24657,6 +24733,7 @@ function (_React$Component) {
           return _this2.onDigitClick('9');
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: '*',
         text: 'x',
         className: 'operation-button',
         onClick: function onClick() {
@@ -24711,6 +24788,7 @@ function (_React$Component) {
           return _this2.onOperatorClick('+');
         }
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: 'n',
         text: '+/-',
         className: 'control-button',
         onClick: this.negate.bind(this)
@@ -24721,10 +24799,12 @@ function (_React$Component) {
           return _this2.onDigitClick('0');
         }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: ['.', ','],
         text: '.',
         className: 'control-button',
         onClick: this.dot.bind(this)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_A_Button_A_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        pkey: ['=', 'Enter'],
         text: '=',
         className: 'operation-button',
         onClick: this.equals.bind(this)
