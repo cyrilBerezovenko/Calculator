@@ -6,8 +6,8 @@
 }
 
 .app {
-    margin: 60px auto;
-    width: 290px;
+    margin: 60px auto 20px auto;
+    width: 360px;
     height: fit-content;
     background-color: #f1f1f1;
 }

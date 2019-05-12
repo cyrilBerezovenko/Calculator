@@ -1,6 +1,7 @@
 package com.cyrilberezovenko.controller;
 
 import com.cyrilberezovenko.service.CalculatorService;
+import com.cyrilberezovenko.service.Mode;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 @Data
@@ -53,13 +53,12 @@ public class Controller {
     }
 
     @GetMapping("/service")
-    public ResponseEntity calculate(@RequestParam(name = "first") double first
-                                    ,@RequestParam(name = "second") double second
-                                    ,@RequestParam(name = "op") String operation) {
+    public ResponseEntity calculate(@RequestParam(value = "args") String[] args,
+                                    @RequestParam(name = "op") String operation,
+                                    @RequestParam(name = "mode") Mode mode) {
 
-        System.out.println(first + " " + second + " " + operation);
-        String res = calculatorService.calculate(first, second, operation);
-        System.out.println(res);
+        String res = calculatorService.calculate(args, operation, mode);
+        if("Error".equals(res)) return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(res);
     }
 }

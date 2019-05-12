@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import O_App from "./Components/O_App/O_App";
+import App from "./Components/App/App";
 
 
-let app = <O_App/>;
+let app = <App/>;
 
 ReactDOM.render(app, document.querySelector('#root'));
