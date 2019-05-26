@@ -377,7 +377,7 @@ exports.push([module.i, ".menu-button {\r\n    background: #f1f1f1;\r\n    borde
 
 exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;\r\n    width: 100%;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n    width: 100%;\r\n    height: 52px;\r\n}\r\n\r\n.base {\r\n    font-weight: 500;\r\n    font-size: 12px;\r\n    text-align: left;\r\n    margin-bottom: 3px;\r\n    word-break: break-all;\r\n}\r\n\r\n.base span {\r\n    width: 35px;\r\n    display: inline-block;\r\n}", ""]);
+exports.push([module.i, ".panel {\r\n    text-align: right;\r\n    padding: 5px;\r\n    width: 100%;\r\n}\r\n\r\n#expr {\r\n    color: gray;\r\n    font-size: 14px;\r\n}\r\n\r\n#expr:empty::after {\r\n    content: \".\";\r\n    visibility: hidden;\r\n}\r\n\r\n#input {\r\n    font-size: 40px;\r\n    font-weight: 500;\r\n    width: 100%;\r\n    height: 52px;\r\n}\r\n\r\n.base {\r\n    font-weight: 500;\r\n    font-size: 12px;\r\n    text-align: left;\r\n    margin-bottom: 3px;\r\n    word-break: break-word;\r\n}\r\n\r\n.base span {\r\n    width: 35px;\r\n    display: inline-block;\r\n}", ""]);
 
 
 
@@ -24587,12 +24587,6 @@ function (_React$Component) {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(App, [{
-    key: "componentWillUpdate",
-    value: function componentWillUpdate(nextProps, nextState) {
-      // console.log(nextState);
-      debugger;
-    }
-  }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState) {
       window.textFit(document.querySelector('#input'));
@@ -24636,6 +24630,7 @@ function (_React$Component) {
 
       var inp = this.state.input;
       if (inp.length === 1) inp = '0';else inp = inp.substr(0, inp.length - 1);
+      if (inp === '-') inp = '0';
       this.setState({
         input: inp
       });
@@ -24676,6 +24671,8 @@ function (_React$Component) {
   }, {
     key: "dot",
     value: function dot() {
+      if (this.state.mode === 'Programmer') return;
+
       if (!this.state.cont_input) {
         this.setState({
           input: '0.',
@@ -24695,6 +24692,7 @@ function (_React$Component) {
   }, {
     key: "onDigitClick",
     value: function onDigitClick(digit) {
+      debugger;
       var inp = this.state.input;
 
       if (this.state.error) {
@@ -25129,7 +25127,8 @@ function MenuButton(props) {
       if (props.app.state.mode === props.mode) return;
       props.app.c();
       props.app.setState({
-        mode: props.mode
+        mode: props.mode,
+        max_digits: props.mode === 'Programmer' ? 18 : 15
       });
     }
   }, props.mode);
@@ -25213,8 +25212,11 @@ function (_React$Component) {
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, Panel);
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4___default()(Panel).call(this, props));
+    props.base[16] = Panel.processInput(props.base[16], 4);
+    props.base[8] = Panel.processInput(props.base[8], 3);
+    props.base[2] = Panel.processInput(props.base[2], 4);
     _this.state = {
-      input: Panel.processInput(props.input),
+      input: Panel.processInput(props.input, 3),
       expr: props.expr,
       base: props.base,
       mode: props.mode
@@ -25227,7 +25229,15 @@ function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       var pr = _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, nextProps);
 
-      if (this.state.input !== pr.input) pr.input = Panel.processInput(pr.input);
+      debugger;
+      if (this.state.input !== pr.input) pr.input = Panel.processInput(pr.input, 3);
+
+      if (this.state.base !== pr.base) {
+        if (this.state.base[16] !== pr.base[16]) pr.base[16] = Panel.processInput(pr.base[16], 4);
+        if (this.state.base[8] !== pr.base[8]) pr.base[8] = Panel.processInput(pr.base[8], 3);
+        if (this.state.base[2] !== pr.base[2]) pr.base[2] = Panel.processInput(pr.base[2], 4);
+      }
+
       this.setState(pr);
     }
   }, {
@@ -25253,24 +25263,26 @@ function (_React$Component) {
     }
   }], [{
     key: "processInput",
-    value: function processInput(inp) {
-      if (inp.indexOf('e') !== -1 || !isFinite(parseFloat(inp))) return inp;
+    value: function processInput(inp, len) {
+      if (!inp) return;
+      if (inp.indexOf('e') !== -1 || !isFinite(parseInt(inp, 16))) return inp;
       var s = '';
+      var dotstr = '';
       var dot = inp.indexOf('.');
 
       if (dot !== -1) {
+        dotstr = inp.slice(dot, inp.length);
         inp = inp.slice(0, dot);
-        s = inp.slice(dot);
       }
 
       for (var i = inp.length - 1; i >= 0; i--) {
         s = inp[i] + s;
-        if ((inp.length - i) % 3 === 0) s = ' ' + s;
+        if ((inp.length - i) % len === 0) s = ' ' + s;
       }
 
       s = s.trim();
       if (s[0] === '-' && s[1] === ' ') s = s[0] + s.slice(2);
-      return s;
+      return s + dotstr;
     }
   }]);
 

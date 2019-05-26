@@ -8,7 +8,10 @@ export default function MenuButton(props) {
             () => {
                 if(props.app.state.mode === props.mode) return;
                 props.app.c();
-                props.app.setState({mode: props.mode});
+                props.app.setState({
+                    mode: props.mode,
+                    max_digits: props.mode === 'Programmer' ? 18 : 15
+                });
             }
         }>{props.mode}</button>
     );

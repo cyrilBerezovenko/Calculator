@@ -6,39 +6,55 @@ export default class Panel extends React.Component {
     constructor(props) {
         super(props);
 
+        props.base[16] = Panel.processInput(props.base[16], 4);
+        props.base[8] = Panel.processInput(props.base[8], 3);
+        props.base[2] = Panel.processInput(props.base[2], 4);
+
         this.state = {
-            input: Panel.processInput(props.input),
+            input: Panel.processInput(props.input, 3),
             expr: props.expr,
             base: props.base,
             mode: props.mode
         }
     }
 
-    static processInput(inp) {
+    static processInput(inp, len) {
 
-        if(inp.indexOf('e') !== -1 || !isFinite(parseFloat(inp))) return inp;
+        if(!inp) return;
+        if(inp.indexOf('e') !== -1 || !isFinite(parseInt(inp, 16))) return inp;
 
         let s = '';
+        let dotstr = '';
         let dot = inp.indexOf('.');
         if (dot !== -1) {
+            dotstr = inp.slice(dot, inp.length);
             inp = inp.slice(0, dot);
-            s = inp.slice(dot);
         }
 
         for (let i = inp.length - 1; i >= 0; i--) {
             s = inp[i] + s;
-            if ((inp.length - i) % 3 === 0) s = ' ' + s;
+            if ((inp.length - i) % len === 0) s = ' ' + s;
         }
         s = s.trim();
         if (s[0] === '-' && s[1] === ' ') s = s[0] + s.slice(2);
 
-        return s;
+        return s + dotstr;
     }
 
     componentWillReceiveProps(nextProps) {
         let pr = {...nextProps};
+        debugger;
         if(this.state.input !== pr.input)
-            pr.input = Panel.processInput(pr.input);
+            pr.input = Panel.processInput(pr.input, 3);
+
+        if(this.state.base !== pr.base) {
+            if(this.state.base[16] !== pr.base[16])
+                pr.base[16] = Panel.processInput(pr.base[16], 4);
+            if(this.state.base[8] !== pr.base[8])
+                pr.base[8] = Panel.processInput(pr.base[8], 3);
+            if(this.state.base[2] !== pr.base[2])
+                pr.base[2] = Panel.processInput(pr.base[2], 4);
+        }
         this.setState(pr);
     }
 

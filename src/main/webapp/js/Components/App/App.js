@@ -22,11 +22,6 @@ export default class App extends React.Component {
         };
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        // console.log(nextState);
-        debugger;
-    }
-
     componentDidUpdate(prevProps, prevState) {
         window.textFit(document.querySelector('#input'));
 
@@ -71,6 +66,7 @@ export default class App extends React.Component {
         let inp = this.state.input;
         if(inp.length === 1) inp = '0';
         else inp = inp.substr(0, inp.length-1);
+        if(inp === '-') inp = '0';
         this.setState({
             input: inp
         });
@@ -99,6 +95,7 @@ export default class App extends React.Component {
     }
 
     dot() {
+        if(this.state.mode === 'Programmer') return;
         if(!this.state.cont_input) {
             this.setState({
                 input: '0.',
@@ -116,6 +113,7 @@ export default class App extends React.Component {
     }
 
     onDigitClick(digit) {
+        debugger;
         let inp = this.state.input;
         if(this.state.error) {
             this.c();
